@@ -21,7 +21,6 @@ def run_ar():
     # declare sift object detector
     sift = cv2.SIFT_create()
 
-    scale_movement = 0
     # start the ar projection
     while True:
         detect = False
@@ -55,7 +54,7 @@ def run_ar():
 
             if homography_matrix is not None:
                 homography_matrix_3d = projection_3D(camera_parameters, homography_matrix)
-                frame = render(frame, obj_3d, homography_matrix_3d, query, scale_movement)
+                frame = render(frame, obj_3d, homography_matrix_3d, query)
 
         scale_movement += 20
         cv2.imshow("Frame", frame)

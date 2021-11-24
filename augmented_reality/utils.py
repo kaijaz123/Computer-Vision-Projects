@@ -39,7 +39,7 @@ def projection_3D(calibration_matrix, homography):
     return np.dot(calibration_matrix, matrix_3d)
 
 
-def render(img, obj, projection, query, scale_movement):
+def render(img, obj, projection, query):
     """
     Render a loaded obj model into the current video frame
     """
