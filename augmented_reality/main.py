@@ -56,7 +56,6 @@ def run_ar():
                 homography_matrix_3d = projection_3D(camera_parameters, homography_matrix)
                 frame = render(frame, obj_3d, homography_matrix_3d, query)
 
-        scale_movement += 20
         cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
