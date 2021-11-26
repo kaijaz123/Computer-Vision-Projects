@@ -15,15 +15,17 @@ def run_ar():
     rgb = cv2.cvtColor(query, cv2.COLOR_BGR2RGB)
     # load the 3d object
     obj_3d = OBJ('3d_objects/fox.obj', swapyz=True)
-    # matrix of camera parameters
-    camera_parameters = np.array([[800, 0, 320], [0, 800, 240], [0, 0, 1]])
 
     # declare sift object detector
     sift = cv2.SIFT_create()
 
+    # initlize empty rotated matrix for rotation later
+    rotated_matrix = []
+
     # start the ar projection
     while True:
         detect = False
+        prev_time = time.time()
         try:
             success, frame = self_cap.read()
         except:
@@ -45,16 +47,16 @@ def run_ar():
                 match_points.append(ptn1)
 
         print("Projecting....")
+        # at least 4 points for projection
         if len(match_points) >= 4:
             detect = True
-            # reshape into 3d
             set_point1 = np.float32([query_kp[ptn.queryIdx].pt for ptn in match_points]).reshape((-1, 1, 2))
             set_point2 = np.float32([train_kp[ptn.trainIdx].pt for ptn in match_points]).reshape((-1, 1, 2))
             homography_matrix, _ = cv2.findHomography(set_point1,set_point2,cv2.RANSAC,5)
 
             if homography_matrix is not None:
-                homography_matrix_3d = projection_3D(camera_parameters, homography_matrix)
-                frame = render(frame, obj_3d, homography_matrix_3d, query)
+                homography_matrix_3d = projection_3D(homography_matrix)
+                rotated_matrix, frame = render(frame, obj_3d, homography_matrix_3d, query, rotated_matrix, prev_time)
 
         cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
