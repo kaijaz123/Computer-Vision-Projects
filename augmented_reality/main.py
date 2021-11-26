@@ -6,6 +6,12 @@ from objloader_simple import OBJ
 from utils import render, projection_3D
 import copy
 
+"""
+    Please replace the self_cap to 0 if you plan to utilise own
+    camera device on your laptop for projection, for this demonstration
+    I have already recorded a video as a replace for live camera video
+"""
+
 def run_ar():
     # load query image
     query = cv2.imread("src/cards.jpg")
