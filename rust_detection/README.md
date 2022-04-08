@@ -1,5 +1,5 @@
 # Description
-To detect the rust region of the device in an image.
+To detect the rust region of the device in an image. Using thresholding segmentation technique and morphological operation to carry out the rust detection process.
 
 # Output
 Output | Binary Output
